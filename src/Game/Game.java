@@ -13,6 +13,6 @@ package Game;
  */
 public class Game
     {
-
+		public Game() {}
     }
 	// end class Game
