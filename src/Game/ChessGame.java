@@ -1,36 +1,38 @@
 
-package Game;
+package Game ;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.JFrame;
+import javax.swing.JFrame ;
+import javax.swing.WindowConstants ;
 
-//Chess piece images from http://world.std.com/~wij/fixation/chess-sets.html
+// Chess piece images from http://world.std.com/~wij/fixation/chess-sets.html
 
-/**
- * 
- * @author Veerle
- *
- */
-public class ChessGame extends JFrame {
+@SuppressWarnings( "javadoc" )
+public class ChessGame extends JFrame
+    {
 
-//With applications, you have to specify a main method (not with applets)
-public static void main(String[] args)  {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1124395750313728651L ;
 
-    //Make it look nice
-    JFrame.setDefaultLookAndFeelDecorated(true); 
-    
-    //Title
-    JFrame frame = new JFrame("Chess Game"); //Title
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    
-    ChessGameGUI chessWindow = new ChessGameGUI();
-    frame.setContentPane(chessWindow.createGUI(frame));
-    frame.addWindowFocusListener(chessWindow);
-    
-    frame.setSize(550,650);
-    frame.setResizable(false);
-    frame.setVisible(true);  
-    frame.pack();
-  }   
-} // end class Game
+// With applications, you have to specify a main method (not with applets)
+    public static void main( final String[] args )
+        {
+
+        // Make it look nice
+        JFrame.setDefaultLookAndFeelDecorated( true ) ;
+
+        // Title
+        final JFrame frame = new JFrame( "Chess Game" ) ; // Title
+        frame.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE ) ;
+
+        final ChessGameGUI chessWindow = new ChessGameGUI() ;
+        frame.setContentPane( chessWindow.createGUI( frame ) ) ;
+        frame.addWindowFocusListener( chessWindow ) ;
+
+        frame.setSize( 550, 650 ) ;
+        frame.setResizable( false ) ;
+        frame.setVisible( true ) ;
+        frame.pack() ;
+        }
+    } // end class Game

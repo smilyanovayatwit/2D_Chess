@@ -1,38 +1,52 @@
 
-package Pieces;
+package Pieces ;
 
 import Game.ChessPieces ;
 
-/**
- * 
- * @author Veerle
- *
- */
+@SuppressWarnings( "javadoc" )
+public class Queen extends ChessPieces
+    {
 
-public class Queen extends ChessPieces {
+    public Queen()
+        {}
 
-        public void Queen () {}
 
-        public boolean legalMove (int startRow, int startColumn, int desRow, int desColumn, int[][] playerMatrix) {
+    public boolean legalMove( final int startRow,
+                              final int startColumn,
+                              final int desRow,
+                              final int desColumn,
+                              final int[][] playerMatrix )
+        {
 
-            boolean axis = true;
+        boolean axis = true ;
 
-            //XOR If ONE of these conditions match (if both true or false then false is returned) 
-            if (startRow == desRow ^ startColumn == desColumn) { 
-            
-                axis = true; //Moving straight along axis
-                
-            } else if (startRow != desRow && startColumn != desColumn) {
-            
-                axis = false; //Moving diagonal
-                
-            } else {
+        // XOR If ONE of these conditions match (if both true or false then false is
+        // returned)
+        if ( ( startRow == desRow ) ^ ( startColumn == desColumn ) )
+            {
 
-                strErrorMsg = "Queen can move in a straight line in any direction";
-                return false;
+            axis = true ; // Moving straight along axis
+
+            }
+        else if ( ( startRow != desRow ) && ( startColumn != desColumn ) )
+            {
+
+            axis = false ; // Moving diagonal
+
+            }
+        else
+            {
+
+            this.strErrorMsg = "Queen can move in a straight line in any direction" ;
+            return false ;
 
             }
 
-            return axisMove(startRow, startColumn, desRow, desColumn, playerMatrix, axis);
+        return axisMove( startRow,
+                         startColumn,
+                         desRow,
+                         desColumn,
+                         playerMatrix,
+                         axis ) ;
         }
-}// end class Queen
+    }// end class Queen

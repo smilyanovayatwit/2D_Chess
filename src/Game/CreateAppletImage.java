@@ -1,67 +1,86 @@
 
-package Game;
+package Game ;
 
-import java.awt.*;
-import java.io.*;
-import javax.swing.ImageIcon;
+import java.awt.Image ;
+import java.awt.Toolkit ;
+import java.io.BufferedInputStream ;
+import java.io.IOException ;
 
-/**
- * 
- * @author Veerle
- *
- */
+import javax.swing.ImageIcon ;
 
-public class CreateAppletImage {
+@SuppressWarnings( "javadoc" )
+public class CreateAppletImage
+    {
 
-        private String strErrorMsg = "";
+    private String strErrorMsg = "" ;
 
-        public Image getImage (Object parentClass, String path, int fileSize) {
-            byte buff[] = createImageArray(parentClass, path, fileSize);
-            return Toolkit.getDefaultToolkit().createImage(buff);
+    public Image getImage( final Object parentClass,
+                           final String path,
+                           final int fileSize )
+        {
+        final byte buff[] = createImageArray( parentClass, path, fileSize ) ;
+        return Toolkit.getDefaultToolkit().createImage( buff ) ;
         }
 
-        public ImageIcon getImageIcon (Object parentClass, String path, String description, int fileSize) {
-            byte buff[] = createImageArray(parentClass, path, fileSize);
-            return new ImageIcon(Toolkit.getDefaultToolkit().createImage(buff), description);
+
+    public ImageIcon getImageIcon( final Object parentClass,
+                                   final String path,
+                                   final String description,
+                                   final int fileSize )
+        {
+        final byte buff[] = createImageArray( parentClass, path, fileSize ) ;
+        return new ImageIcon( Toolkit.getDefaultToolkit().createImage( buff ),
+                              description ) ;
         }
 
-        public void CreateAppletImage(){}
 
-        public String getErrorMsg () {
-            return strErrorMsg;
+    public CreateAppletImage()
+        {}
+
+
+    public String getErrorMsg()
+        {
+        return this.strErrorMsg ;
         }
 
-        private byte[] createImageArray (Object parentClass, String path, int fileSize) {
 
-            int count = 0;
+    @SuppressWarnings( { "resource", "unused" } )
+    private byte[] createImageArray( final Object parentClass,
+                                     final String path,
+                                     final int fileSize )
+        {
 
-            BufferedInputStream imgStream = new BufferedInputStream(parentClass.getClass().getResourceAsStream(path));
+        int count = 0 ;
 
-            //If file exists
-            if (imgStream != null) {
+        final BufferedInputStream imgStream =
+                                        new BufferedInputStream( parentClass.getClass()
+                                                                            .getResourceAsStream( path ) ) ;
 
-                byte buff[] = new byte[fileSize]; //Create the array of bytes
+        final byte buff[] = new byte[ fileSize ] ; // Create the array of bytes
 
-                try {               
-                    count = imgStream.read(buff);
-                } catch (IOException e) {
-                    strErrorMsg = "Error reading from file: " + path;
-                }
-
-                try{
-                    imgStream.close(); //Closes the stream
-                } catch (IOException e) {
-                    strErrorMsg = "Error closing file: " + path;
-                }
-
-                if (count <= 0) {
-                    strErrorMsg = "Error, empty file: " + path;
-                    return null;
-                }
-                return buff;
-            } else {
-                strErrorMsg = "Could Not Find File: " + path;
-                return null;
+        try
+            {
+            count = imgStream.read( buff ) ;
             }
+        catch ( final IOException e )
+            {
+            this.strErrorMsg = "Error reading from file: " + path ;
+            }
+
+        try
+            {
+            imgStream.close() ; // Closes the stream
+            }
+        catch ( final IOException e )
+            {
+            this.strErrorMsg = "Error closing file: " + path ;
+            }
+
+        if ( count <= 0 )
+            {
+            this.strErrorMsg = "Error, empty file: " + path ;
+            return null ;
+            }
+        return buff ;
         }
-}// end class CreateAppletImage
+    } // end class CreateAppletImage

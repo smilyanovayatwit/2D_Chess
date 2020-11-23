@@ -1,82 +1,116 @@
 
-package Game;
+package Game ;
 
-/**
- * 
- * @author Veerle
- *
- */
-
+@SuppressWarnings( "javadoc" )
 public class PaintInstructions
     {
 
-    private int startRow = 0, startColumn = 0, rowCells = 0, columnCells = 0;
+    private int startRow = 0, startColumn = 0, rowCells = 0, columnCells = 0 ;
 
-    public PaintInstructions () {}
+    public PaintInstructions()
+        {}
 
-    public PaintInstructions (int firstRow, int firstColumn) {
-        calculateRedrawCells (firstRow, firstColumn);
-    }
 
-    public PaintInstructions (int startRow, int startColumn, int numCells) {
-        this.startRow = startRow;
-        this.startColumn = startColumn;
-        rowCells = numCells;
-        columnCells = numCells;
-    }
-
-    private void calculateRedrawCells (int firstRow, int firstColumn) {
-
-        if (firstRow == 0) {
-            this.startRow = firstRow;
-        } else {
-            this.startRow = firstRow - 1;
+    public PaintInstructions( final int firstRow, final int firstColumn )
+        {
+        calculateRedrawCells( firstRow, firstColumn ) ;
         }
 
-        if (firstColumn == 0) {
-            this.startColumn = firstColumn;
-        } else {
-            this.startColumn = firstColumn - 1;
+
+    @SuppressWarnings( "hiding" )
+    public PaintInstructions( final int startRow,
+                              final int startColumn,
+                              final int numCells )
+        {
+        this.startRow = startRow ;
+        this.startColumn = startColumn ;
+        this.rowCells = numCells ;
+        this.columnCells = numCells ;
         }
 
-        if (firstRow <= 5) {
-            rowCells = 3;
-        } else {
-            rowCells = 8 - startRow;
+
+    private void calculateRedrawCells( final int firstRow,
+                                       final int firstColumn )
+        {
+
+        if ( firstRow == 0 )
+            {
+            this.startRow = firstRow ;
+            }
+        else
+            {
+            this.startRow = firstRow - 1 ;
+            }
+
+        if ( firstColumn == 0 )
+            {
+            this.startColumn = firstColumn ;
+            }
+        else
+            {
+            this.startColumn = firstColumn - 1 ;
+            }
+
+        if ( firstRow <= 5 )
+            {
+            this.rowCells = 3 ;
+            }
+        else
+            {
+            this.rowCells = 8 - this.startRow ;
+            }
+
+        if ( firstColumn <= 5 )
+            {
+            this.columnCells = 3 ;
+            }
+        else
+            {
+            this.columnCells = 8 - this.startColumn ;
+            }
         }
 
-        if (firstColumn <= 5) {
-            columnCells = 3;
-        } else {
-            columnCells = 8 - startColumn;
+
+    public void setMatrix( final int firstRow,
+                           final int firstColumn )
+        {
+        calculateRedrawCells( firstRow, firstColumn ) ;
         }
-    }
 
-    public void setMatrix (int firstRow, int firstColumn) {
-        calculateRedrawCells(firstRow, firstColumn);
-    }
 
-    public void setMatrix (int startRow, int startColumn, int numCells) {
+    @SuppressWarnings( "hiding" )
+    public void setMatrix( final int startRow,
+                           final int startColumn,
+                           final int numCells )
+        {
 
-        this.startRow = startRow;
-        this.startColumn = startColumn;
-        rowCells = numCells;
-        columnCells = numCells;
-    }
+        this.startRow = startRow ;
+        this.startColumn = startColumn ;
+        this.rowCells = numCells ;
+        this.columnCells = numCells ;
+        }
 
-    public int getStartRow () {
-        return startRow;
-    }
 
-    public int getStartColumn (){
-        return startColumn;
-    }
+    public int getStartRow()
+        {
+        return this.startRow ;
+        }
 
-    public int getRowCells (){
-        return rowCells;
-    }
 
-    public int getColumnCells () {
-        return columnCells;
-    }
-} // end class PaintInstructions
+    public int getStartColumn()
+        {
+        return this.startColumn ;
+        }
+
+
+    public int getRowCells()
+        {
+        return this.rowCells ;
+        }
+
+
+    public int getColumnCells()
+        {
+        return this.columnCells ;
+        }
+    } // end class PaintInstructions

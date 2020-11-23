@@ -1,97 +1,133 @@
 
-package Game;
+package Game ;
 
-//Standard chess board which can be used for chess, draughts etc
-import java.awt.*;
-import java.util.Vector;
+// Standard chess board which can be used for chess, draughts etc
+import java.awt.Canvas ;
+import java.awt.Color ;
+import java.awt.Graphics ;
+import java.util.Vector ;
 
-/**
- * 
- * @author Veerle
- *
- */
+@SuppressWarnings( "javadoc" )
+public class ChessBoard extends Canvas
+    {
 
-public class ChessBoard extends Canvas {
-    
-    protected PaintInstructions currentInstruction = null;
-    protected Vector vecPaintInstructions = new Vector();
+    /**
+     *
+     */
+    private static final long serialVersionUID = -8965615572309003893L ;
+    protected PaintInstructions currentInstruction = null ;
+    protected Vector<PaintInstructions> vecPaintInstructions = new Vector<>() ;
 
-    public void chessBoard () {}
+    public void chessBoard()
+        {}
 
-    public void update (Graphics g) {
-        paint(g);
-    }
 
-    public void paint (Graphics g) {
-
-        if (vecPaintInstructions.size() == 0) {
-
-            g.setColor(new Color(75,141,221)); //Light blue
-            g.fillRect(0,0,500,50); //North border
-            g.fillRect(0,0,50,500); //West border
-            g.fillRect(0,450,500,50); //South border
-            g.fillRect(450,0,50,500); //East border
-
-            currentInstruction = new PaintInstructions(0,0,8);
-            vecPaintInstructions.addElement(currentInstruction);
-
+    @Override
+    public void update( final Graphics g )
+        {
+        paint( g ) ;
         }
 
-        g.setColor(new Color(75,141,221));
-        g.fillRect(50,450,450,50); //Paint over the current status text     
 
-        for (int i = 0; i < vecPaintInstructions.size(); i++) {
+    @Override
+    public void paint( final Graphics g )
+        {
 
-            currentInstruction = (PaintInstructions)vecPaintInstructions.elementAt(i);
-            int startRow = currentInstruction.getStartRow();
-            int startColumn = currentInstruction.getStartColumn();
-            int rowCells = currentInstruction.getRowCells();
-            int columnCells = currentInstruction.getColumnCells();
+        if ( this.vecPaintInstructions.size() == 0 )
+            {
 
-            for (int row = startRow; row < (startRow + rowCells); row++) {
-                for (int column = startColumn; column < (startColumn + columnCells); column++) {
-                    drawTile(row, column, g);
+            g.setColor( new Color( 75, 141, 221 ) ) ; // Light blue
+            g.fillRect( 0, 0, 500, 50 ) ; // North border
+            g.fillRect( 0, 0, 50, 500 ) ; // West border
+            g.fillRect( 0, 450, 500, 50 ) ; // South border
+            g.fillRect( 450, 0, 50, 500 ) ; // East border
+
+            this.currentInstruction = new PaintInstructions( 0, 0, 8 ) ;
+            this.vecPaintInstructions.addElement( this.currentInstruction ) ;
+
+            }
+
+        g.setColor( new Color( 75, 141, 221 ) ) ;
+        g.fillRect( 50, 450, 450, 50 ) ; // Paint over the current status text
+
+        for ( int i = 0 ; i < this.vecPaintInstructions.size() ; i++ )
+            {
+
+            this.currentInstruction = this.vecPaintInstructions.elementAt( i ) ;
+            final int startRow = this.currentInstruction.getStartRow() ;
+            final int startColumn = this.currentInstruction.getStartColumn() ;
+            final int rowCells = this.currentInstruction.getRowCells() ;
+            final int columnCells = this.currentInstruction.getColumnCells() ;
+
+            for ( int row = startRow ; row < ( startRow + rowCells ) ; row++ )
+                {
+                for ( int column = startColumn ;
+                      column < ( startColumn + columnCells ) ;
+                      column++ )
+                    {
+                    drawTile( row, column, g ) ;
+                    }
                 }
             }
+
+        drawExtra( g ) ;
+
         }
 
-        drawExtra(g);
 
-    }
+    private static void drawTile( final int row,
+                                  final int column,
+                                  final Graphics g )
+        {
 
-    private void drawTile (int row, int column, Graphics g) {
-
-        if ((row + 1) % 2 == 0) {
-            if ((column + 1) % 2 == 0) {
-                g.setColor(new Color(255,255,255)); //white
-            } else {
-                g.setColor(new Color(0,0,0)); //black
+        if ( ( ( row + 1 ) % 2 ) == 0 )
+            {
+            if ( ( ( column + 1 ) % 2 ) == 0 )
+                {
+                g.setColor( new Color( 255, 255, 255 ) ) ; // white
+                }
+            else
+                {
+                g.setColor( new Color( 0, 0, 0 ) ) ; // black
+                }
             }
-        } else {
-            if ((column + 1) % 2 == 0) {
-                g.setColor(new Color(0,0,0));
-            } else {
-                g.setColor(new Color(255,255,255));
+        else
+            {
+            if ( ( ( column + 1 ) % 2 ) == 0 )
+                {
+                g.setColor( new Color( 0, 0, 0 ) ) ;
+                }
+            else
+                {
+                g.setColor( new Color( 255, 255, 255 ) ) ;
+                }
             }
-        }
-        
-        g.fillRect((50 + (column * 50)), (50 + (row * 50)), 50, 50);
-    }   
-    
-    //Protected means it can only be used by this class, and classes extending it
-    //Any class extending the chess board can use this method to add extra things like player pieces
-    protected void drawExtra (Graphics g) {}
 
-    //Finds which tile the mouse is over
-    protected int findWhichTileSelected (int coor) {
-
-        for (int i = 0; i < 8; i++) {
-            if ((coor >= (50 + (i * 50))) && (coor <= (100 + (i * 50)))) {
-                return i;
-            }
+        g.fillRect( ( 50 + ( column * 50 ) ), ( 50 + ( row * 50 ) ), 50, 50 ) ;
         }
 
-        return -1;
-    }
-    
-}// end class Board
+
+    // Protected means it can only be used by this class, and classes extending it
+    // Any class extending the chess board can use this method to add extra things
+    // like player pieces
+    protected void drawExtra( final Graphics g )
+        {}
+
+
+    // Finds which tile the mouse is over
+    protected static int findWhichTileSelected( final int coor )
+        {
+
+        for ( int i = 0 ; i < 8 ; i++ )
+            {
+            if ( ( coor >= ( 50 + ( i * 50 ) ) ) &&
+                 ( coor <= ( 100 + ( i * 50 ) ) ) )
+                {
+                return i ;
+                }
+            }
+
+        return -1 ;
+        }
+
+    }// end class Board
