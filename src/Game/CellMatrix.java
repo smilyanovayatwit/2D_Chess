@@ -1,6 +1,12 @@
 
 package Game ;
 
+/***
+ * 
+ * @author Veerle
+ *
+ */
+
 @SuppressWarnings( "javadoc" )
 public class CellMatrix
     {

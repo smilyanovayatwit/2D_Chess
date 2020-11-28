@@ -1,6 +1,8 @@
 
 package Game ;
 
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.JFrame ;
 import javax.swing.WindowConstants ;
 
@@ -10,12 +12,9 @@ import javax.swing.WindowConstants ;
 public class ChessGame extends JFrame
     {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1124395750313728651L ;
 
-// With applications, you have to specify a main method (not with applets)
+    // With applications, you have to specify a main method (not with applets)
     public static void main( final String[] args )
         {
 
@@ -35,4 +34,4 @@ public class ChessGame extends JFrame
         frame.setVisible( true ) ;
         frame.pack() ;
         }
-    } // end class Game
+    } // end class Game 

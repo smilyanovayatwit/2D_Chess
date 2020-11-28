@@ -1,6 +1,12 @@
 
 package Game ;
 
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.JOptionPane;
+
+/*
 import java.awt.BorderLayout ;
 import java.awt.Color ;
 import java.awt.Container ;
@@ -22,23 +28,28 @@ import javax.swing.JLabel ;
 import javax.swing.JOptionPane ;
 import javax.swing.JPanel ;
 import javax.swing.JTextField ;
-import javax.swing.SwingConstants ;
+import javax.swing.SwingConstants ;*/
 
 @SuppressWarnings( "javadoc" )
 public class ChessGameGUI implements ActionListener, KeyListener, WindowFocusListener
     {
 
-    private WindowChessBoard mainChessBoard ;
+    private WindowChessBoard mainChessBoard ;  // -----------------------
     private CreateAppletImage createImage ;
     private JButton cmdNewGame, cmdSetNames ;
     private JTextField txtPlayerOne, txtPlayerTwo ;
     private JLabel lblPlayerOne, lblPlayerTwo ;
-    private final String[] strRedPieces = { "redPawn.gif", "redRock.gif",
-                                            "redKnight.gif", "redBishop.gif",
-                                            "redQueen.gif", "redKing.gif" } ;
-    private final String[] strBluePieces = { "bluePawn.gif", "blueRock.gif",
-                                             "blueKnight.gif", "blueBishop.gif",
-                                             "blueQueen.gif", "blueKing.gif" } ;
+   // private String[] strRedPieces = {"redPawn.gif","redRock.gif","redKnight.gif","redBishop.gif","redQueen.gif","redKing.gif"};
+	//private String[] strBluePieces = {"bluePawn.gif","blueRock.gif","blueKnight.gif","blueBishop.gif","blueQueen.gif","blueKing.gif"};
+    private String[] strRedPieces = {"wpawn.gif","wrook.gif","wknight.gif","wbishop.gif","wqueen.gif","wking.gif"};
+	private String[] strBluePieces = {"bpawn.gif","brook.gif","bknight.gif","bbishop.gif","bqueen.gif","bking.gif"}; 
+   /* private final String[] strRedPieces = { "wpawn.gif", "wrook.gif",
+            								"wknight.gif", "wbishop.gif",
+            								"wqueen.gif", "wking.gif" } ;
+    private final String[] strBluePieces = { "bpawn.gif", "brook.gif",
+    										 "bknight.gif", "bbishop.gif",
+    										 "bqueen.gif", "bking.gif" } ;
+    */
     private final Color clrBlue = new Color( 75, 141, 221 ) ;
     private MediaTracker mt ;
 
@@ -54,7 +65,7 @@ public class ChessGameGUI implements ActionListener, KeyListener, WindowFocusLis
         panRoot.setOpaque( true ) ;
         panRoot.setPreferredSize( new Dimension( 550, 650 ) ) ;
 
-        this.mainChessBoard = new WindowChessBoard() ;
+        this.mainChessBoard = new WindowChessBoard() ; // ---------------------------
         this.createImage = new CreateAppletImage() ;
 
         this.mainChessBoard.setSize( new Dimension( 500, 500 ) ) ;
