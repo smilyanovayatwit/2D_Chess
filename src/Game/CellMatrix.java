@@ -2,20 +2,18 @@
 package Game ;
 
 /***
- * 
  * @author Veerle
- *
  */
 
 @SuppressWarnings( "javadoc" )
 public class CellMatrix
     {
 
-    // Stores which player is in a cell. 0 empty, 1 player one, 2 player two
+    // stores which player is in a cell. 0 empty, 1 player one, 2 player two
     private final int[][] playerMatrix = new int[ 8 ][ 8 ] ;
 
     /*
-     * Stores which piece is in a cell. 0 pawn, 1 rock, 2 knight, 3 bishop, 4 queen,
+     * stores which piece is in a cell. 0 pawn, 1 rock, 2 knight, 3 bishop, 4 queen,
      * 5 king, 6 empty
      */
     private final int[][] pieceMatrix = new int[ 8 ][ 8 ] ;
@@ -136,7 +134,7 @@ public class CellMatrix
             {
             for ( int column = 0 ; column < 8 ; column++ )
                 {
-                // If the enemy's king still remains
+                // if the enemy's king still remains
                 if ( ( this.playerMatrix[ row ][ column ] == checkPlayer ) &&
                      ( this.pieceMatrix[ row ][ column ] == 5 ) )
                     {

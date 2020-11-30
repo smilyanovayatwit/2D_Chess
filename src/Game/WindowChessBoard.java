@@ -1,4 +1,6 @@
-package Game;
+
+package Game ;
+
 import java.awt.Color ;
 import java.awt.Graphics ;
 import java.awt.Image ;
@@ -30,19 +32,23 @@ public class WindowChessBoard extends ChessBoard
                                         // refreshed
 
     private final Image[][] imgPlayer = new Image[ 2 ][ 6 ] ;
-    private final String[] strPlayerName = { "Veerle", "Natasja" } ;
-    private String strStatusMsg = "" ;
+    public final String[] strPlayerName = { "Client 1", "Client 2" } ;
+    public String strStatusMsg = "" ;
     private final CellMatrix cellMatrix = new CellMatrix() ;
-    private int currentPlayer = 1, startRow = 0, startColumn = 0,
-                                    pieceBeingDragged = 0 ;
-    private final int startingX = 0, startingY = 0 ;
+    public int currentPlayer = 1 ;
+
+    private int startRow = 0 ;
+
+    private int startColumn = 0 ;
+
+    private int pieceBeingDragged = 0 ;
 
     private int currentX = 0 ;
 
     private int currentY = 0 ;
 
     private int refreshCounter = 0 ;
-    private boolean firstTime = true, hasWon = false, isDragging = false ;
+    private boolean hasWon = false, isDragging = false ;
 
     private final Pawn pawnObject = new Pawn() ;
     private final Rook rockObject = new Rook() ;
@@ -58,7 +64,8 @@ public class WindowChessBoard extends ChessBoard
         }
 
 
-    private String getPlayerMsg()
+// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
+    public String getPlayerMsg()
         {
 
         if ( this.hasWon )
@@ -68,24 +75,12 @@ public class WindowChessBoard extends ChessBoard
                    ", you are the winner!" ;
 
             }
-        else if ( this.firstTime )
-            {
 
-            return "" + this.strPlayerName[ 0 ] + " you are red, " +
-                   this.strPlayerName[ 1 ] +
-                   " you are blue. Press new game to start" ;
-
-            }
-        else
-            {
-
-            return "" + this.strPlayerName[ this.currentPlayer - 1 ] + " move" ;
-
-            }
+        return "It is " + this.strPlayerName[ this.currentPlayer - 1 ] + "'s move" ;
         }
 
 
-    private void resetBoard()
+    public void resetBoard()
         {
         this.hasWon = false ;
         this.currentPlayer = 1 ;
@@ -109,9 +104,9 @@ public class WindowChessBoard extends ChessBoard
         {
         this.strPlayerName[ 0 ] = strPlayer1Name ;
         this.strPlayerName[ 1 ] = strPlayer2Name ;
-        this.strStatusMsg = getPlayerMsg() ;
         repaint() ;
         }
+// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
 
 
     @SuppressWarnings( "unused" )
@@ -179,14 +174,13 @@ public class WindowChessBoard extends ChessBoard
 
     public void newGame()
         {
-        this.firstTime = false ;
         resetBoard() ;
         }
 
 
     @SuppressWarnings( "unused" )
-    private void checkMove( final int desRow,
-                            final int desColumn )
+    public void checkMove( final int desRow,
+                           final int desColumn )
         {
 
         boolean legalMove = false ;
@@ -292,23 +286,23 @@ public class WindowChessBoard extends ChessBoard
                                            newDesColumn,
                                            this.currentPlayer ) ;
 
-            // If pawn has got to the end row
+            // if pawn got to the other side of the board
             if ( ( this.pieceBeingDragged == 0 ) &&
                  ( ( newDesRow == 0 ) || ( newDesRow == 7 ) ) )
                 {
 
                 boolean canPass = false ;
                 int newPiece = 2 ;
-                String strNewPiece = "Rock" ;
-                final String[] strPieces = { "Rock", "Knight", "Bishop", "Queen" } ;
+                String strNewPiece = "Rook" ;
+                final String[] strPieces = { "Rook", "Knight", "Bishop", "Queen" } ;
                 final JOptionPane digBox = new JOptionPane( "Choose the piece to change your pawn into",
                                                             JOptionPane.QUESTION_MESSAGE,
                                                             JOptionPane.OK_CANCEL_OPTION,
                                                             null,
                                                             strPieces,
-                                                            "Rock" ) ;
+                                                            "Rook" ) ;
                 final JDialog dig = digBox.createDialog( null,
-                                                         "pawn at end of board" ) ;
+                                                         "Pawn at end of board" ) ;
 
                 do
                     {
@@ -346,6 +340,8 @@ public class WindowChessBoard extends ChessBoard
                                               this.pieceBeingDragged ) ;
                 }
 
+// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
+// checkmate
             if ( this.cellMatrix.checkWinner( this.currentPlayer ) )
                 {
 
@@ -370,6 +366,7 @@ public class WindowChessBoard extends ChessBoard
                     }
                 this.strStatusMsg = getPlayerMsg() ;
                 }
+// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
             }
         else
             {
@@ -448,7 +445,7 @@ public class WindowChessBoard extends ChessBoard
     public void mousePressed( final MouseEvent e )
         {
 
-        if ( !this.hasWon && !this.firstTime )
+        if ( !this.hasWon )
             {
 
             final int x = e.getX() ;

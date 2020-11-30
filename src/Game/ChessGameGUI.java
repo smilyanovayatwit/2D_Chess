@@ -1,12 +1,6 @@
 
 package Game ;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.JOptionPane;
-
-/*
 import java.awt.BorderLayout ;
 import java.awt.Color ;
 import java.awt.Container ;
@@ -21,35 +15,30 @@ import java.awt.event.KeyListener ;
 import java.awt.event.WindowEvent ;
 import java.awt.event.WindowFocusListener ;
 
-import javax.swing.BorderFactory ;
 import javax.swing.JButton ;
 import javax.swing.JFrame ;
 import javax.swing.JLabel ;
 import javax.swing.JOptionPane ;
 import javax.swing.JPanel ;
 import javax.swing.JTextField ;
-import javax.swing.SwingConstants ;*/
 
 @SuppressWarnings( "javadoc" )
 public class ChessGameGUI implements ActionListener, KeyListener, WindowFocusListener
     {
 
-    private WindowChessBoard mainChessBoard ;  // -----------------------
+    private WindowChessBoard mainChessBoard ;
     private CreateAppletImage createImage ;
-    private JButton cmdNewGame, cmdSetNames ;
+    private JButton cmdSetNames ;
     private JTextField txtPlayerOne, txtPlayerTwo ;
-    private JLabel lblPlayerOne, lblPlayerTwo ;
-   // private String[] strRedPieces = {"redPawn.gif","redRock.gif","redKnight.gif","redBishop.gif","redQueen.gif","redKing.gif"};
-	//private String[] strBluePieces = {"bluePawn.gif","blueRock.gif","blueKnight.gif","blueBishop.gif","blueQueen.gif","blueKing.gif"};
-    private String[] strRedPieces = {"wpawn.gif","wrook.gif","wknight.gif","wbishop.gif","wqueen.gif","wking.gif"};
-	private String[] strBluePieces = {"bpawn.gif","brook.gif","bknight.gif","bbishop.gif","bqueen.gif","bking.gif"}; 
-   /* private final String[] strRedPieces = { "wpawn.gif", "wrook.gif",
-            								"wknight.gif", "wbishop.gif",
-            								"wqueen.gif", "wking.gif" } ;
-    private final String[] strBluePieces = { "bpawn.gif", "brook.gif",
-    										 "bknight.gif", "bbishop.gif",
-    										 "bqueen.gif", "bking.gif" } ;
-    */
+    public static JLabel lblPlayerOne ;
+
+    private final String[] strRedPieces =
+                                    { "wpawn.gif", "wrook.gif", "wknight.gif",
+                                      "wbishop.gif", "wqueen.gif", "wking.gif" } ;
+    private final String[] strBluePieces =
+                                    { "bpawn.gif", "brook.gif", "bknight.gif",
+                                      "bbishop.gif", "bqueen.gif", "bking.gif" } ;
+
     private final Color clrBlue = new Color( 75, 141, 221 ) ;
     private MediaTracker mt ;
 
@@ -57,6 +46,7 @@ public class ChessGameGUI implements ActionListener, KeyListener, WindowFocusLis
         {}
 
 
+// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
     @SuppressWarnings( "unused" )
     public Container createGUI( final JFrame mainApp )
         {
@@ -65,26 +55,23 @@ public class ChessGameGUI implements ActionListener, KeyListener, WindowFocusLis
         panRoot.setOpaque( true ) ;
         panRoot.setPreferredSize( new Dimension( 550, 650 ) ) ;
 
-        this.mainChessBoard = new WindowChessBoard() ; // ---------------------------
+        this.mainChessBoard = new WindowChessBoard() ;
         this.createImage = new CreateAppletImage() ;
 
         this.mainChessBoard.setSize( new Dimension( 500, 500 ) ) ;
 
-        this.cmdNewGame = new JButton( "New Game" ) ;
         this.cmdSetNames = new JButton( "Set Names" ) ;
 
-        this.cmdNewGame.addActionListener( this ) ;
         this.cmdSetNames.addActionListener( this ) ;
 
-        this.txtPlayerOne = new JTextField( "Veerle", 10 ) ;
-        this.txtPlayerTwo = new JTextField( "Natasja", 10 ) ;
+        // name fields
+        this.txtPlayerOne = new JTextField( "Client 1", 10 ) ;
+        this.txtPlayerTwo = new JTextField( "Client 2", 10 ) ;
 
         this.txtPlayerOne.addKeyListener( this ) ;
         this.txtPlayerTwo.addKeyListener( this ) ;
 
-        this.lblPlayerOne = new JLabel( "    ", SwingConstants.RIGHT ) ;
-        this.lblPlayerTwo = new JLabel( "    ", SwingConstants.RIGHT ) ;
-
+        // chess piece images
         try
             {
 
@@ -123,7 +110,7 @@ public class ChessGameGUI implements ActionListener, KeyListener, WindowFocusLis
                                            "Unable to load images. There should be a folder called images with all the chess pieces in it. Try downloading this programme again",
                                            "Unable to load images",
                                            JOptionPane.WARNING_MESSAGE ) ;
-            this.cmdNewGame.setEnabled( false ) ;
+
             this.cmdSetNames.setEnabled( false ) ;
             }
 
@@ -138,16 +125,12 @@ public class ChessGameGUI implements ActionListener, KeyListener, WindowFocusLis
         panRoot.add( panBottomHalf, BorderLayout.SOUTH ) ;
         panBottomHalf.add( panNameArea, BorderLayout.WEST ) ;
         panNameArea.add( panPlayerOne ) ;
-        panPlayerOne.add( this.lblPlayerOne ) ;
         panPlayerOne.add( this.txtPlayerOne ) ;
         panNameArea.add( panPlayerTwo ) ;
-        panPlayerTwo.add( this.lblPlayerTwo ) ;
         panPlayerTwo.add( this.txtPlayerTwo ) ;
         panNameArea.add( panNameButton ) ;
         panNameButton.add( this.cmdSetNames ) ;
         panBottomHalf.add( panNewGame, BorderLayout.SOUTH ) ;
-        panNewGame.add( this.cmdNewGame ) ;
-
         panRoot.setBackground( this.clrBlue ) ;
         panBottomHalf.setBackground( this.clrBlue ) ;
         panNameArea.setBackground( this.clrBlue ) ;
@@ -156,40 +139,41 @@ public class ChessGameGUI implements ActionListener, KeyListener, WindowFocusLis
         panNameButton.setBackground( this.clrBlue ) ;
         panNewGame.setBackground( this.clrBlue ) ;
 
-        this.lblPlayerOne.setBackground( new Color( 236, 17, 17 ) ) ; // red
-        this.lblPlayerTwo.setBackground( new Color( 17, 27, 237 ) ) ; // blue
-
-        this.cmdNewGame.setBorder( BorderFactory.createEmptyBorder( 5, 5, 5, 5 ) ) ;
+        // ChessGameGUI.lblPlayerOne.setBackground( new Color( 236, 17, 17 ) ) ; //
+        // red
+        // this.lblPlayerTwo.setBackground( new Color( 17, 27, 237 ) ) ; // blue
 
         return panRoot ;
 
         }
+// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
 
 
     @Override
     public void actionPerformed( final ActionEvent e )
         {
 
+        // if button for "Set Names" is pressed
         if ( e.getSource() == this.cmdSetNames )
             {
+            // default name for player 1
             if ( this.txtPlayerOne.getText().equals( "" ) )
                 {
-                this.txtPlayerOne.setText( "Veerle" ) ;
+                this.txtPlayerOne.setText( "Client 1" ) ;
                 }
 
+            // default name for player 2
             if ( this.txtPlayerTwo.getText().equals( "" ) )
                 {
-                this.txtPlayerTwo.setText( "Natasja" ) ;
+                this.txtPlayerTwo.setText( "Client 2" ) ;
                 }
 
+            // sets names as entered
             this.mainChessBoard.setNames( this.txtPlayerOne.getText(),
                                           this.txtPlayerTwo.getText() ) ;
 
             }
-        else if ( e.getSource() == this.cmdNewGame )
-            {
-            this.mainChessBoard.newGame() ;
-            }
+
         }
 
 
@@ -209,7 +193,8 @@ public class ChessGameGUI implements ActionListener, KeyListener, WindowFocusLis
             strBuffer = this.txtPlayerTwo.getText() ;
             }
 
-        if ( ( strBuffer.length() > 10 ) &&
+        // sets limit for name length
+        if ( ( strBuffer.length() == 20 ) &&
              ! ( ( c == KeyEvent.VK_BACK_SPACE ) || ( c == KeyEvent.VK_DELETE ) ) )
             {
             e.consume() ;

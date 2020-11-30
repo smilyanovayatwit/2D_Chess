@@ -75,36 +75,49 @@ public class ChessBoard extends Canvas
         }
 
 
+// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
     private static void drawTile( final int row,
                                   final int column,
                                   final Graphics g )
         {
 
+        // for changing color of the board
+        final Color white = new Color( 255, 255, 255 ) ;
+        final Color other = new Color( 0, 0, 0 ) ;
+
+        // fills color for odd rows of the chess board
         if ( ( ( row + 1 ) % 2 ) == 0 )
             {
+            // white squares
             if ( ( ( column + 1 ) % 2 ) == 0 )
                 {
-                g.setColor( new Color( 255, 255, 255 ) ) ; // white
+                g.setColor( white ) ;
                 }
+            // color black
             else
                 {
-                g.setColor( new Color( 0, 0, 0 ) ) ; // black
+                g.setColor( other ) ;
                 }
             }
+        // fills color for even/other rows of the chess board
         else
             {
+            // color black
             if ( ( ( column + 1 ) % 2 ) == 0 )
                 {
-                g.setColor( new Color( 0, 0, 0 ) ) ;
+                g.setColor( other ) ;
                 }
+            // color white
             else
                 {
-                g.setColor( new Color( 255, 255, 255 ) ) ;
+                g.setColor( white ) ;
                 }
             }
 
+        // fills the grid with the 2 colors
         g.fillRect( ( 50 + ( column * 50 ) ), ( 50 + ( row * 50 ) ), 50, 50 ) ;
         }
+// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
 
 
     // Protected means it can only be used by this class, and classes extending it
@@ -114,7 +127,7 @@ public class ChessBoard extends Canvas
         {}
 
 
-    // Finds which tile the mouse is over
+    // finds which tile the mouse is over
     protected static int findWhichTileSelected( final int coor )
         {
 
@@ -130,4 +143,4 @@ public class ChessBoard extends Canvas
         return -1 ;
         }
 
-    }// end class Board
+    } // end class Board

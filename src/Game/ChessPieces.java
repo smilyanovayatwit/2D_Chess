@@ -7,19 +7,20 @@ public class ChessPieces
 
     protected int finalDesRow = 0 ;
     protected int finalDesColumn = 0 ;
-    protected String strErrorMsg = "" ;
+    protected String strErrorMsg = "" ; // error message for chess pieces
 
     public ChessPieces()
         {}
 
 
-    // Checks the cell to make sure it is empty
+// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
+    // checks the cell to make sure it is empty
     private boolean checkAxisMove( final int newRow,
                                    final int newColumn,
                                    final int[][] playerMatrix )
         {
 
-        // If not empty
+        // if not empty
         if ( playerMatrix[ newRow ][ newColumn ] != 0 )
             {
             this.strErrorMsg = "A piece is blocking the route" ; // Error message
@@ -27,10 +28,10 @@ public class ChessPieces
             }
         return true ;
         }
+// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
 
 
-    // Method for checking the path to the destination and making sure nothing is in
-    // the way
+    // checks path to the destination to make sure nothing is in the way
     protected boolean axisMove( final int startRow,
                                 final int startColumn,
                                 final int desRow,
@@ -39,7 +40,7 @@ public class ChessPieces
                                 final boolean straightAxis )
         {
 
-        // Moving along a straight axis (rock, queen)
+        // Moving along a straight axis (rook, queen)
         if ( straightAxis )
             {
 
