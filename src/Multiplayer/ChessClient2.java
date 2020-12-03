@@ -1,7 +1,8 @@
 /**
- * 
+ *
  */
-package Multiplayer;
+
+package Multiplayer ;
 
 import java.io.BufferedReader ;
 import java.io.DataOutputStream ;
@@ -9,10 +10,13 @@ import java.io.InputStreamReader ;
 import java.net.Socket ;
 import java.util.Scanner ;
 
+import Game.ChessGame ;
+
 @SuppressWarnings( "javadoc" )
 class ChessClient2
     {
-
+    static ChessGame game ;
+    
     static class WriteThread implements Runnable
         {
 
@@ -45,8 +49,8 @@ class ChessClient2
             {
             // enter {quit} in the console
             final Scanner s = new Scanner( System.in ) ;
-            final String quitMsg = s.nextLine() ;
-            this.outToServer.writeBytes( quitMsg + "\r\n" ) ;
+            final String inputMessage = s.nextLine() ;
+            this.outToServer.writeBytes( inputMessage + "\r\n" ) ;
             }
         }
 
@@ -75,7 +79,6 @@ class ChessClient2
         final String helloMsg = inFromServer.readLine() ;
         System.out.println( helloMsg ) ;
 
-
         // start write thread
         final WriteThread write = new WriteThread( outToServer ) ;
         final Thread thread = new Thread( write ) ;
@@ -90,6 +93,11 @@ class ChessClient2
                 if ( serverMessage.equals( "{quit}" ) )
                     {
                     return ;
+                    }
+                else if ( serverMessage.startsWith( "White" ) )
+                    {
+                    game = new ChessGame() ;
+                    game.window() ;
                     }
                 System.out.println( serverMessage ) ;
                 }

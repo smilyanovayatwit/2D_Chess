@@ -13,7 +13,6 @@ import java.util.Map ;
 
 import Game.ChessGame ;
 import Game.WindowChessBoard ;
-// import Game.CellMatrix; ;
 
 @SuppressWarnings( "javadoc" )
 class ChessServer
@@ -23,6 +22,64 @@ class ChessServer
     static ChessGame game ;
     static WindowChessBoard board ;
 
+    // writing to the client
+    static class WriteThread implements Runnable
+        {
+
+        DataOutputStream outToClient ;
+
+        @SuppressWarnings( "hiding" )
+        public WriteThread( final DataOutputStream outToClient )
+            {
+            this.outToClient = outToClient ;
+            }
+
+
+        @Override
+        public void run()
+            {
+            try
+                {
+                processBoard() ;
+                }
+            catch ( final Exception e )
+                {
+                System.out.println( e ) ;
+                }
+
+            }
+
+
+        private void processBoard() throws Exception
+            {
+            String gameMessage = null ;
+            
+            while ( true )
+                {
+                while ( ( gameMessage = board.strStatusMsg ) != null )
+                    {
+                    if ( gameMessage.startsWith( "Congrats " ) )
+                        {
+                        broadcast( "", "The game is over!" ) ;
+                        break ;
+                        }
+                    else if ( board.currentPlayer == 1 )
+                        {
+                        broadcast( "", "Player 1's turn") ;
+                        }
+                    else if ( board.currentPlayer == 2 )
+                        {
+                        broadcast( "", "Player 2's turn" ) ;
+                        }
+                    broadcast( "", gameMessage ) ;
+                    return ;
+                    }
+                }
+            }
+        }
+
+
+    // for the client
     static class ClientRequest implements Runnable
         {
 
@@ -99,12 +156,15 @@ class ChessServer
                 final ArrayList<String> client = new ArrayList<>( clients.keySet() ) ;
                 board = new WindowChessBoard() ;
                 board.setNames( client.get( 0 ), client.get( 1 ) ) ;
-
+                
                 // start the game
-                game = new ChessGame() ;
-                game.window() ;
                 board.newGame() ;
                 broadcast( "", "White makes the first move" ) ;
+                
+                // start write thread
+                final WriteThread write = new WriteThread( outToClient ) ;
+                final Thread thread = new Thread( write ) ;
+                thread.start() ;
                 }
 
 // while ( board.strStatusMsg != null )
@@ -124,26 +184,36 @@ class ChessServer
 // }
 
             // get message from client
-            final String clientMessage = inFromClient.readLine() ;
-            System.out.println( board.strStatusMsg ) ;
-            final String gameMessage = board.strStatusMsg ;
+// System.out.println( board.strStatusMsg ) ;
+// if ( board.currentPlayer == 1 )
+// {
+// broadcast( "", board.strStatusMsg ) ;
+// }
+// else
+// {
+// broadcast( "", "It is Client 2's move") ;
+// }
 
-            while ( !clientMessage.equals( "{quit}" ) ||
-                    !gameMessage.startsWith( "Congrats " ) )
+            // broadcast( "", board.strStatusMsg ) ;
+            String clientMessage = null ;
+            
+            while ( true )
                 {
-                // when a player quits the game
-                if ( clientMessage.equals( "{quit}" ) )
+                while ( ( clientMessage = inFromClient.readLine() ) != null )
                     {
-                    System.out.println( clientName + " has left the game!" ) ;
-                    outToClient.writeBytes( clientMessage + "\r\n" ) ;
-                    clients.remove( clientName ) ;
-                    if ( !clients.isEmpty() )
+                    if ( clientMessage.equals( "{quit}" ) )
                         {
-                        broadcast( clientName, " has left the game!" ) ;
+                        System.out.println( clientName + " has left the game!" ) ;
+                        outToClient.writeBytes( clientMessage + "\r\n" ) ;
+                        clients.remove( clientName ) ;
+                        if ( !clients.isEmpty() )
+                            {
+                            broadcast( clientName, " has left the game!" ) ;
+                            }
+                        return ;
                         }
-                    break ;
                     }
-
+                }
                 // when a player wins the game
 // if ( CellMatrix.checkWinner( 0 ) == true )
 // {
@@ -156,10 +226,10 @@ class ChessServer
 // break;
 // }
 
-                System.out.println( gameMessage ) ;
-                broadcast( "", gameMessage ) ;
-                return ;
-                }
+// System.out.println( gameMessage ) ;
+// broadcast( "", gameMessage ) ;
+// return ;
+
             }
         }
 
@@ -196,5 +266,6 @@ class ChessServer
             // start the thread
             thread.start() ;
             }
+
         }
     }

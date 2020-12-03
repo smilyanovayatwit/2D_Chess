@@ -10,10 +10,13 @@ import java.io.InputStreamReader ;
 import java.net.Socket ;
 import java.util.Scanner ;
 
+import Game.ChessGame ;
+
 @SuppressWarnings( "javadoc" )
 class ChessClient
     {
-
+    static ChessGame game ;
+    
     static class WriteThread implements Runnable
         {
 
@@ -46,8 +49,8 @@ class ChessClient
             {
             // enter {quit} in the console
             final Scanner s = new Scanner( System.in ) ;
-            final String quitMsg = s.nextLine() ;
-            this.outToServer.writeBytes( quitMsg + "\r\n" ) ;
+            final String inputMessage = s.nextLine() ;
+            this.outToServer.writeBytes( inputMessage + "\r\n" ) ;
             }
         }
 
@@ -90,6 +93,11 @@ class ChessClient
                 if ( serverMessage.equals( "{quit}" ) )
                     {
                     return ;
+                    }
+                else if ( serverMessage.startsWith( "White" ) )
+                    {
+                    game = new ChessGame() ;
+                    game.window() ;
                     }
                 System.out.println( serverMessage ) ;
                 }
