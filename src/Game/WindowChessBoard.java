@@ -1,6 +1,10 @@
 
 package Game ;
 
+/**
+ * @author Veerle
+ */
+
 import java.awt.Color ;
 import java.awt.Graphics ;
 import java.awt.Image ;
@@ -23,9 +27,6 @@ public class WindowChessBoard extends ChessBoard
     implements MouseListener, MouseMotionListener
     {
 
-    /**
-    *
-    */
     private static final long serialVersionUID = 8129795847503729878L ;
 
     private final int refreshRate = 5 ; // Amount of pixels moved before screen is
@@ -34,21 +35,23 @@ public class WindowChessBoard extends ChessBoard
     private final Image[][] imgPlayer = new Image[ 2 ][ 6 ] ;
     public final String[] strPlayerName = { "Client 1", "Client 2" } ;
     public String strStatusMsg = "" ;
-    private final CellMatrix cellMatrix = new CellMatrix() ;
+    public final CellMatrix cellMatrix = new CellMatrix() ;
     public int currentPlayer = 1 ;
 
     private int startRow = 0 ;
 
     private int startColumn = 0 ;
 
-    private int pieceBeingDragged = 0 ;
+    public int pieceBeingDragged = 0 ;
 
     private int currentX = 0 ;
 
     private int currentY = 0 ;
 
     private int refreshCounter = 0 ;
-    private boolean hasWon = false, isDragging = false ;
+    private boolean hasWon = false ;
+
+    public boolean isDragging = false ;
 
     private final Pawn pawnObject = new Pawn() ;
     private final Rook rockObject = new Rook() ;
@@ -166,7 +169,6 @@ public class WindowChessBoard extends ChessBoard
             }
 
         g.setColor( new Color( 0, 0, 0 ) ) ;
-        g.drawString( this.strStatusMsg, 50, 475 ) ;
 
         this.vecPaintInstructions.clear() ; // clear all paint instructions
         }
@@ -286,7 +288,7 @@ public class WindowChessBoard extends ChessBoard
                                            newDesColumn,
                                            this.currentPlayer ) ;
 
-            // if pawn got to the other side of the board
+            // if pawn gets to the other side of the board
             if ( ( this.pieceBeingDragged == 0 ) &&
                  ( ( newDesRow == 0 ) || ( newDesRow == 7 ) ) )
                 {
@@ -340,8 +342,7 @@ public class WindowChessBoard extends ChessBoard
                                               this.pieceBeingDragged ) ;
                 }
 
-// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
-// checkmate
+            // checkmate
             if ( this.cellMatrix.checkWinner( this.currentPlayer ) )
                 {
 
@@ -366,7 +367,6 @@ public class WindowChessBoard extends ChessBoard
                     }
                 this.strStatusMsg = getPlayerMsg() ;
                 }
-// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
             }
         else
             {
@@ -411,8 +411,8 @@ public class WindowChessBoard extends ChessBoard
         }
 
 
-    private void updatePaintInstructions( final int desRow,
-                                          final int desColumn )
+    public void updatePaintInstructions( final int desRow,
+                                         final int desColumn )
         {
         this.currentInstruction = new PaintInstructions( this.startRow,
                                                          this.startColumn,
@@ -451,7 +451,7 @@ public class WindowChessBoard extends ChessBoard
             final int x = e.getX() ;
             final int y = e.getY() ;
 
-            // in the correct bounds
+            // If in the correct bounds
             if ( ( ( x > 60 ) && ( x < 430 ) ) && ( ( y > 60 ) && ( y < 430 ) ) )
                 {
                 this.startRow = findWhichTileSelected( y ) ;

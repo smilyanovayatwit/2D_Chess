@@ -1,6 +1,10 @@
 
 package Game ;
 
+/**
+ * @author Veerle
+ */
+
 // Standard chess board which can be used for chess, draughts etc
 import java.awt.Canvas ;
 import java.awt.Color ;
@@ -11,9 +15,6 @@ import java.util.Vector ;
 public class ChessBoard extends Canvas
     {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -8965615572309003893L ;
     protected PaintInstructions currentInstruction = null ;
     protected Vector<PaintInstructions> vecPaintInstructions = new Vector<>() ;
@@ -71,7 +72,6 @@ public class ChessBoard extends Canvas
             }
 
         drawExtra( g ) ;
-
         }
 
 
@@ -83,7 +83,7 @@ public class ChessBoard extends Canvas
 
         // for changing color of the board
         final Color white = new Color( 255, 255, 255 ) ;
-        final Color other = new Color( 0, 0, 0 ) ;
+        final Color other = new Color( 50, 50, 50 ) ;
 
         // fills color for odd rows of the chess board
         if ( ( ( row + 1 ) % 2 ) == 0 )
@@ -93,7 +93,7 @@ public class ChessBoard extends Canvas
                 {
                 g.setColor( white ) ;
                 }
-            // color black
+            // color gray
             else
                 {
                 g.setColor( other ) ;

@@ -1,6 +1,10 @@
 
 package Game ;
 
+/**
+ * @author Veerle
+ */
+
 @SuppressWarnings( "javadoc" )
 public class ChessPieces
     {
@@ -13,7 +17,6 @@ public class ChessPieces
         {}
 
 
-// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
     // checks the cell to make sure it is empty
     private boolean checkAxisMove( final int newRow,
                                    final int newColumn,
@@ -28,7 +31,6 @@ public class ChessPieces
             }
         return true ;
         }
-// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
 
 
     // checks path to the destination to make sure nothing is in the way
@@ -97,7 +99,7 @@ public class ChessPieces
                         }
                     }
                 else
-                    {// Moving E
+                    { // Moving E
 
                     for ( int newColumn = ( startColumn + 1 ) ;
                           newColumn < desColumn ;
@@ -111,14 +113,14 @@ public class ChessPieces
                     }
                 }
             else
-                {// If moved diagonally
+                { // If moved diagonally
 
                 this.strErrorMsg = "Should not see this error message" ;
                 return false ;
                 }
             }
         else
-            {// Moving diagonal (bishop/queen)
+            { // Moving diagonal (bishop/queen)
 
             // Default error message
             this.strErrorMsg = "The destination is not on the same diagonal line" ;
@@ -176,7 +178,7 @@ public class ChessPieces
                     }
                 }
             else if ( ( desRow > startRow ) && ( desColumn < startColumn ) )
-                {// If moved SW
+                { // If moved SW
 
                 if ( ( startRow - desRow ) == ( desColumn - startColumn ) )
                     {

@@ -1,36 +1,29 @@
 
 package Game ;
 
+/**
+ * @author Veerle
+ */
+
 import java.awt.BorderLayout ;
 import java.awt.Color ;
 import java.awt.Container ;
 import java.awt.Dimension ;
-import java.awt.GridLayout ;
 import java.awt.Image ;
 import java.awt.MediaTracker ;
-import java.awt.event.ActionEvent ;
-import java.awt.event.ActionListener ;
-import java.awt.event.KeyEvent ;
-import java.awt.event.KeyListener ;
 import java.awt.event.WindowEvent ;
 import java.awt.event.WindowFocusListener ;
 
-import javax.swing.JButton ;
 import javax.swing.JFrame ;
-import javax.swing.JLabel ;
 import javax.swing.JOptionPane ;
 import javax.swing.JPanel ;
-import javax.swing.JTextField ;
 
 @SuppressWarnings( "javadoc" )
-public class ChessGameGUI implements ActionListener, KeyListener, WindowFocusListener
+public class ChessGameGUI implements WindowFocusListener
     {
 
-    private WindowChessBoard mainChessBoard ;
+    public WindowChessBoard mainChessBoard ;
     private CreateAppletImage createImage ;
-    private JButton cmdSetNames ;
-    private JTextField txtPlayerOne, txtPlayerTwo ;
-    public static JLabel lblPlayerOne ;
 
     private final String[] strRedPieces =
                                     { "wpawn.gif", "wrook.gif", "wknight.gif",
@@ -53,23 +46,12 @@ public class ChessGameGUI implements ActionListener, KeyListener, WindowFocusLis
 
         final JPanel panRoot = new JPanel( new BorderLayout() ) ;
         panRoot.setOpaque( true ) ;
-        panRoot.setPreferredSize( new Dimension( 550, 650 ) ) ;
+        panRoot.setPreferredSize( new Dimension( 500, 500 ) ) ;
 
         this.mainChessBoard = new WindowChessBoard() ;
         this.createImage = new CreateAppletImage() ;
 
         this.mainChessBoard.setSize( new Dimension( 500, 500 ) ) ;
-
-        this.cmdSetNames = new JButton( "Set Names" ) ;
-
-        this.cmdSetNames.addActionListener( this ) ;
-
-        // name fields
-        this.txtPlayerOne = new JTextField( "Client 1", 10 ) ;
-        this.txtPlayerTwo = new JTextField( "Client 2", 10 ) ;
-
-        this.txtPlayerOne.addKeyListener( this ) ;
-        this.txtPlayerTwo.addKeyListener( this ) ;
 
         // chess piece images
         try
@@ -110,107 +92,17 @@ public class ChessGameGUI implements ActionListener, KeyListener, WindowFocusLis
                                            "Unable to load images. There should be a folder called images with all the chess pieces in it. Try downloading this programme again",
                                            "Unable to load images",
                                            JOptionPane.WARNING_MESSAGE ) ;
-
-            this.cmdSetNames.setEnabled( false ) ;
             }
 
         final JPanel panBottomHalf = new JPanel( new BorderLayout() ) ;
-        final JPanel panNameArea = new JPanel( new GridLayout( 3, 1, 2, 2 ) ) ;
-        final JPanel panPlayerOne = new JPanel() ;
-        final JPanel panPlayerTwo = new JPanel() ;
-        final JPanel panNameButton = new JPanel() ;
-        final JPanel panNewGame = new JPanel() ;
-
         panRoot.add( this.mainChessBoard, BorderLayout.NORTH ) ;
         panRoot.add( panBottomHalf, BorderLayout.SOUTH ) ;
-        panBottomHalf.add( panNameArea, BorderLayout.WEST ) ;
-        panNameArea.add( panPlayerOne ) ;
-        panPlayerOne.add( this.txtPlayerOne ) ;
-        panNameArea.add( panPlayerTwo ) ;
-        panPlayerTwo.add( this.txtPlayerTwo ) ;
-        panNameArea.add( panNameButton ) ;
-        panNameButton.add( this.cmdSetNames ) ;
-        panBottomHalf.add( panNewGame, BorderLayout.SOUTH ) ;
         panRoot.setBackground( this.clrBlue ) ;
         panBottomHalf.setBackground( this.clrBlue ) ;
-        panNameArea.setBackground( this.clrBlue ) ;
-        panPlayerOne.setBackground( this.clrBlue ) ;
-        panPlayerTwo.setBackground( this.clrBlue ) ;
-        panNameButton.setBackground( this.clrBlue ) ;
-        panNewGame.setBackground( this.clrBlue ) ;
-
-        // ChessGameGUI.lblPlayerOne.setBackground( new Color( 236, 17, 17 ) ) ; //
-        // red
-        // this.lblPlayerTwo.setBackground( new Color( 17, 27, 237 ) ) ; // blue
 
         return panRoot ;
-
         }
 // FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
-
-
-    @Override
-    public void actionPerformed( final ActionEvent e )
-        {
-
-        // if button for "Set Names" is pressed
-        if ( e.getSource() == this.cmdSetNames )
-            {
-            // default name for player 1
-            if ( this.txtPlayerOne.getText().equals( "" ) )
-                {
-                this.txtPlayerOne.setText( "Client 1" ) ;
-                }
-
-            // default name for player 2
-            if ( this.txtPlayerTwo.getText().equals( "" ) )
-                {
-                this.txtPlayerTwo.setText( "Client 2" ) ;
-                }
-
-            // sets names as entered
-            this.mainChessBoard.setNames( this.txtPlayerOne.getText(),
-                                          this.txtPlayerTwo.getText() ) ;
-
-            }
-
-        }
-
-
-    @Override
-    public void keyTyped( final KeyEvent e )
-        {
-
-        String strBuffer = "" ;
-        final char c = e.getKeyChar() ;
-
-        if ( e.getSource() == this.txtPlayerOne )
-            {
-            strBuffer = this.txtPlayerOne.getText() ;
-            }
-        else
-            {
-            strBuffer = this.txtPlayerTwo.getText() ;
-            }
-
-        // sets limit for name length
-        if ( ( strBuffer.length() == 20 ) &&
-             ! ( ( c == KeyEvent.VK_BACK_SPACE ) || ( c == KeyEvent.VK_DELETE ) ) )
-            {
-            e.consume() ;
-            }
-
-        }
-
-
-    @Override
-    public void keyPressed( final KeyEvent e )
-        {}
-
-
-    @Override
-    public void keyReleased( final KeyEvent e )
-        {}
 
 
     @Override

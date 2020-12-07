@@ -1,6 +1,10 @@
 
 package Game ;
 
+/**
+ * @author Veerle
+ */
+
 @SuppressWarnings( "javadoc" )
 public class PaintInstructions
     {
@@ -113,4 +117,4 @@ public class PaintInstructions
         {
         return this.columnCells ;
         }
-    } // end class PaintInstructions
+    }

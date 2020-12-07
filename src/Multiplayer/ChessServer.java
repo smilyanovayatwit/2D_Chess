@@ -1,6 +1,10 @@
 
 package Multiplayer ;
 
+/**
+ * @author Tiffany Phan and Yuliya Smilyanova
+ */
+
 import java.io.BufferedReader ;
 import java.io.DataOutputStream ;
 import java.io.IOException ;
@@ -11,18 +15,17 @@ import java.util.ArrayList ;
 import java.util.HashMap ;
 import java.util.Map ;
 
-import Game.ChessGame ;
 import Game.WindowChessBoard ;
 
 @SuppressWarnings( "javadoc" )
 class ChessServer
     {
 
-    private static Map<String, DataOutputStream> clients = new HashMap<>() ;
-    static ChessGame game ;
+    private static Map<String, DataOutputStream> clientsOutputs = new HashMap<>() ;
+    static ArrayList<String> client ;
     static WindowChessBoard board ;
 
-    // writing to the client
+    // for writing to the client
     static class WriteThread implements Runnable
         {
 
@@ -46,30 +49,23 @@ class ChessServer
                 {
                 System.out.println( e ) ;
                 }
-
             }
 
 
-        private void processBoard() throws Exception
+        // different messages from the board class
+        // mostly for sending these to the client
+        private void processBoard() throws IOException
             {
             String gameMessage = null ;
-            
+
             while ( true )
                 {
-                while ( ( gameMessage = board.strStatusMsg ) != null )
+                while ( ( gameMessage = board.getPlayerMsg() ) != null )
                     {
                     if ( gameMessage.startsWith( "Congrats " ) )
                         {
                         broadcast( "", "The game is over!" ) ;
                         break ;
-                        }
-                    else if ( board.currentPlayer == 1 )
-                        {
-                        broadcast( "", "Player 1's turn") ;
-                        }
-                    else if ( board.currentPlayer == 2 )
-                        {
-                        broadcast( "", "Player 2's turn" ) ;
                         }
                     broadcast( "", gameMessage ) ;
                     return ;
@@ -79,7 +75,7 @@ class ChessServer
         }
 
 
-    // for the client
+    // for handling the clients and game
     static class ClientRequest implements Runnable
         {
 
@@ -102,11 +98,10 @@ class ChessServer
                 {
                 System.out.println( e ) ;
                 }
-
             }
 
 
-        @SuppressWarnings( "resource" )
+        @SuppressWarnings( { "resource" } )
         private void processRequest() throws Exception
             {
             final BufferedReader inFromClient =
@@ -114,137 +109,113 @@ class ChessServer
             final DataOutputStream outToClient =
                                             new DataOutputStream( this.connectionSocket.getOutputStream() ) ;
 
-            // send welcome message to client
-            final String welcomeMsg = "Welcome! Please enter your name" ;
-            outToClient.writeBytes( welcomeMsg + "\r\n" ) ;
+            // send welcome message to the client
+            final String welcomeMessage = "Welcome! Please enter your name" ;
+            outToClient.writeBytes( welcomeMessage + "\r\n" ) ;
 
-            // get name from client
+            // get name from the client
             final String clientName = inFromClient.readLine() ;
             System.out.println( clientName + " has joined the game!" ) ;
 
-            // send hello message to client
-            final String helloMsg = "Hello " + clientName + "! Type {quit} to exit" ;
-            outToClient.writeBytes( helloMsg + "\r\n" ) ;
+            // send hello message to the client
+            final String helloMessage = "Hello " + clientName +
+                                        "! Type {quit} to exit" ;
+            outToClient.writeBytes( helloMessage + "\r\n" ) ;
 
-            // broadcast the message
-            if ( !clients.isEmpty() )
+            // if there's another player broadcast the message to them
+            if ( !clientsOutputs.isEmpty() )
                 {
                 broadcast( clientName, " has joined the game!" ) ;
                 }
 
-            // add client to the map
-            clients.put( clientName, outToClient ) ;
+            // add client to the HashMap
+            clientsOutputs.put( clientName, outToClient ) ;
 
-            // for choosing chess piece color
-// if ( clients.size() == 1 )
-// {
-// final String pieceColorMsg = "Please choose the color of your chess pieces (W or
-// B)." ;
-// outToClient.writeBytes( pieceColorMsg + "\r\n" ) ;
-// final String clientChoice = inFromClient.readLine() ;
-// if ( clientChoice == "W" )
-// {
-// broadcast( "", "Your chess piece color is white.") ;
-// }
-// broadcast( "", "Your chess piece color is black.") ;
-// }
-
-            // only two players per game
-            if ( clients.size() >= 2 )
+            // allow only 2 players per game
+            if ( clientsOutputs.size() >= 2 )
                 {
-                // set player names as entered
-                final ArrayList<String> client = new ArrayList<>( clients.keySet() ) ;
+                // adds just the names of the clients to a new ArrayList
+                client = new ArrayList<>( clientsOutputs.keySet() ) ;
+
+                // create a new chess board
                 board = new WindowChessBoard() ;
+
+                // set names of each player
                 board.setNames( client.get( 0 ), client.get( 1 ) ) ;
-                
+
                 // start the game
                 board.newGame() ;
                 broadcast( "", "White makes the first move" ) ;
-                
+
                 // start write thread
                 final WriteThread write = new WriteThread( outToClient ) ;
                 final Thread thread = new Thread( write ) ;
                 thread.start() ;
                 }
 
-// while ( board.strStatusMsg != null )
-// {
-// broadcast( "", board.strStatusMsg );
-// if ( board.strStatusMsg.startsWith( "Congrats " ) )
-// {
-// broadcast( "", board.strStatusMsg ) ;
-// broadcast( "", "Now closing the game...") ;
-// for (int i = clients.size(); i > 0; i--)
-// {
-// clients.remove( clientName ) ;
-// }
-// break;
-// }
-// return;
-// }
-
-            // get message from client
-// System.out.println( board.strStatusMsg ) ;
-// if ( board.currentPlayer == 1 )
-// {
-// broadcast( "", board.strStatusMsg ) ;
-// }
-// else
-// {
-// broadcast( "", "It is Client 2's move") ;
-// }
-
-            // broadcast( "", board.strStatusMsg ) ;
+            // receive different types of messages from the client
             String clientMessage = null ;
-            
             while ( true )
                 {
                 while ( ( clientMessage = inFromClient.readLine() ) != null )
                     {
+                    // {quit} message to close the game
                     if ( clientMessage.equals( "{quit}" ) )
                         {
                         System.out.println( clientName + " has left the game!" ) ;
                         outToClient.writeBytes( clientMessage + "\r\n" ) ;
-                        clients.remove( clientName ) ;
-                        if ( !clients.isEmpty() )
+                        clientsOutputs.remove( clientName ) ;
+                        if ( !clientsOutputs.isEmpty() )
                             {
                             broadcast( clientName, " has left the game!" ) ;
                             }
-                        return ;
+                        break ;
+                        }
+
+                    // START and END messages to update the chess board for both
+                    // players
+                    else if ( clientMessage.startsWith( "START" ) )
+                        {
+                        broadcast( "", clientMessage ) ;
+                        }
+                    else if ( clientMessage.startsWith( "END" ) )
+                        {
+                        String currentPlayer ;
+                        if ( board.currentPlayer == 1 )
+                            {
+                            board.currentPlayer = 2 ;
+                            currentPlayer = "2" ;
+                            }
+                        else
+                            {
+                            board.currentPlayer = 1 ;
+                            currentPlayer = "1" ;
+                            }
+                        broadcast( "", clientMessage ) ;
+
+                        // update and send message for whose turn it is
+                        broadcast( "", currentPlayer ) ;
+                        broadcast( "", board.getPlayerMsg() ) ;
                         }
                     }
+                break ;
                 }
-                // when a player wins the game
-// if ( CellMatrix.checkWinner( 0 ) == true )
-// {
-// broadcast( "", gameMessage ) ;
-// broadcast( "", "Now closing the game...") ;
-// for (int i = clients.size() - 1; i > 0; i--)
-// {
-// clients.remove( clientName ) ;
-// }
-// break;
-// }
-
-// System.out.println( gameMessage ) ;
-// broadcast( "", gameMessage ) ;
-// return ;
-
             }
         }
 
-    // broadcast messages to both players
+    // broadcast messages to both clients
     public static void broadcast( final String other,
                                   final String message )
         throws IOException
         {
-        for ( final DataOutputStream os : clients.values() )
+        for ( final DataOutputStream os : clientsOutputs.values() )
             {
             os.writeBytes( other + message + "\r\n" ) ;
             }
-        } // broadcast
+        }
 
 
+    // open server for accepting clients
     @SuppressWarnings( "resource" )
     public static void main( final String argv[] ) throws Exception
         {
@@ -257,15 +228,10 @@ class ChessServer
             {
             final Socket connectionSocket = serverSocket.accept() ;
 
-            // create client request instance
+            // start clients thread
             final ClientRequest request = new ClientRequest( connectionSocket ) ;
-
-            // create a new thread to handle the client request
             final Thread thread = new Thread( request ) ;
-
-            // start the thread
             thread.start() ;
             }
-
         }
     }

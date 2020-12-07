@@ -1,7 +1,7 @@
 
 package Game ;
 
-/***
+/**
  * @author Veerle
  */
 
@@ -13,8 +13,14 @@ public class CellMatrix
     private final int[][] playerMatrix = new int[ 8 ][ 8 ] ;
 
     /*
-     * stores which piece is in a cell. 0 pawn, 1 rock, 2 knight, 3 bishop, 4 queen,
-     * 5 king, 6 empty
+     * stores which piece is in a cell
+     * 0 pawn
+     * 1 rook
+     * 2 knight
+     * 3 bishop
+     * 4 queen
+     * 5 king
+     * 6 empty
      */
     private final int[][] pieceMatrix = new int[ 8 ][ 8 ] ;
 
