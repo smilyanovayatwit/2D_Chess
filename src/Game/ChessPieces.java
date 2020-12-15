@@ -42,34 +42,35 @@ public class ChessPieces
                                 final boolean straightAxis )
         {
 
-        // Moving along a straight axis (rook, queen)
+        // if moving along a straight axis (rook/queen)
         if ( straightAxis )
             {
 
-            // Moving along the same column
+            // if moving along the same column
             if ( ( startColumn == desColumn ) && ( startRow != desRow ) )
                 {
 
-                // Moving N
+                // if moving north
                 if ( desRow < startRow )
                     {
 
-                    // Checks each cell between the start row - 1 (since don't need
+                    // checks each cell between the start row - 1 (since don't need
                     // to check the cell it is in) to the destination cell
                     for ( int newRow = ( startRow - 1 ) ;
                           newRow > desRow ;
                           newRow-- )
                         {
 
-                        // Checks the cell is empty
+                        // checks if the cell is empty
                         if ( !checkAxisMove( newRow, desColumn, playerMatrix ) )
                             {
                             return false ;
                             }
                         }
                     }
+                // if moving south
                 else
-                    { // Moving S
+                    {
 
                     for ( int newRow = ( startRow + 1 ) ;
                           newRow < desRow ;
@@ -82,10 +83,11 @@ public class ChessPieces
                         }
                     }
                 }
+            // if moving along the same row
             else if ( ( startRow == desRow ) && ( startColumn != desColumn ) )
-                { // Moving along the same row
+                {
 
-                // Moving W
+                // if moving west
                 if ( desColumn < startColumn )
                     {
                     for ( int newColumn = ( startColumn - 1 ) ;
@@ -98,8 +100,9 @@ public class ChessPieces
                             }
                         }
                     }
+                // if moving east
                 else
-                    { // Moving E
+                    {
 
                     for ( int newColumn = ( startColumn + 1 ) ;
                           newColumn < desColumn ;
@@ -112,26 +115,28 @@ public class ChessPieces
                         }
                     }
                 }
+            // if moved diagonally
             else
-                { // If moved diagonally
+                {
 
                 this.strErrorMsg = "Should not see this error message" ;
                 return false ;
                 }
             }
+        // if moving diagonally (bishop/queen)
         else
-            { // Moving diagonal (bishop/queen)
+            {
 
-            // Default error message
+            // default error message
             this.strErrorMsg = "The destination is not on the same diagonal line" ;
             int newColumn = 0 ;
 
-            // If moved NW
+            // if moved northwest
             if ( ( desRow < startRow ) && ( desColumn < startColumn ) )
                 {
 
-                // The number of cells moved horizontal should equal the number of
-                // cells moved vertical
+                // the number of cells moved horizontally should equal the number of
+                // cells moved vertically
                 if ( ( desRow - startRow ) == ( desColumn - startColumn ) )
                     {
 
@@ -153,8 +158,9 @@ public class ChessPieces
                     return false ;
                     }
                 }
+            // if moved northeast
             else if ( ( desRow < startRow ) && ( desColumn > startColumn ) )
-                { // If moved NE
+                {
 
                 if ( ( desRow - startRow ) == ( startColumn - desColumn ) )
                     {
@@ -177,8 +183,9 @@ public class ChessPieces
                     return false ;
                     }
                 }
+            // if moved southwest
             else if ( ( desRow > startRow ) && ( desColumn < startColumn ) )
-                { // If moved SW
+                {
 
                 if ( ( startRow - desRow ) == ( desColumn - startColumn ) )
                     {
@@ -201,8 +208,9 @@ public class ChessPieces
                     return false ;
                     }
                 }
+            // if moved southeast
             else if ( ( desRow > startRow ) && ( desColumn > startColumn ) )
-                { // If moved SE
+                {
 
                 if ( ( startRow - desRow ) == ( startColumn - desColumn ) )
                     {
@@ -225,8 +233,9 @@ public class ChessPieces
                     return false ;
                     }
                 }
+            // if not a diagonal move
             else
-                { // Not a diagonal move
+                {
 
                 this.strErrorMsg = "Should never see this error message" ;
                 return false ;
@@ -256,4 +265,4 @@ public class ChessPieces
         {
         return this.strErrorMsg ;
         }
-    }
+    } // end class ChessPieces

@@ -1,6 +1,10 @@
 
 package Pieces ;
 
+/**
+ * @author Veerle
+ */
+
 import Game.ChessPieces ;
 
 @SuppressWarnings( "javadoc" )
@@ -20,20 +24,22 @@ public class Queen extends ChessPieces
 
         boolean axis = true ;
 
-        // XOR If ONE of these conditions match (if both true or false then false is
-        // returned)
+        // if moving straight along axis
         if ( ( startRow == desRow ) ^ ( startColumn == desColumn ) )
             {
 
             axis = true ; // Moving straight along axis
 
             }
+        // if moving diagonally
         else if ( ( startRow != desRow ) && ( startColumn != desColumn ) )
             {
 
             axis = false ; // Moving diagonal
 
             }
+        // XOR: if only ONE of the above conditions match
+        // otherwise if both true or false then false is returned
         else
             {
 
@@ -49,4 +55,4 @@ public class Queen extends ChessPieces
                          playerMatrix,
                          axis ) ;
         }
-    }// end class Queen
+    } // end class Queen

@@ -1,6 +1,10 @@
 
 package Pieces ;
 
+/**
+ * @author Veerle
+ */
+
 import Game.ChessPieces ;
 
 @SuppressWarnings( "javadoc" )
@@ -18,7 +22,7 @@ public class Bishop extends ChessPieces
                               final int[][] playerMatrix )
         {
 
-        // If moved straight
+        // if moved non-diagonally
         if ( ( startRow == desRow ) || ( startColumn == desColumn ) )
             {
 

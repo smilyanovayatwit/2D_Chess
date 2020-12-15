@@ -60,7 +60,7 @@ public class CreateAppletImage
                                         new BufferedInputStream( parentClass.getClass()
                                                                             .getResourceAsStream( path ) ) ;
 
-        final byte buff[] = new byte[ fileSize ] ; // Create the array of bytes
+        final byte buff[] = new byte[ fileSize ] ; // create the array of bytes
 
         try
             {
@@ -73,7 +73,7 @@ public class CreateAppletImage
 
         try
             {
-            imgStream.close() ; // Closes the stream
+            imgStream.close() ; // closes the stream
             }
         catch ( final IOException e )
             {
@@ -87,4 +87,4 @@ public class CreateAppletImage
             }
         return buff ;
         }
-    }
+    } // end class CreateAppletImage

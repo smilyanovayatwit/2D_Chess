@@ -5,7 +5,6 @@ package Game ;
  * @author Veerle
  */
 
-// Standard chess board which can be used for chess, draughts etc
 import java.awt.Canvas ;
 import java.awt.Color ;
 import java.awt.Graphics ;
@@ -37,11 +36,11 @@ public class ChessBoard extends Canvas
         if ( this.vecPaintInstructions.size() == 0 )
             {
 
-            g.setColor( new Color( 75, 141, 221 ) ) ; // Light blue
-            g.fillRect( 0, 0, 500, 50 ) ; // North border
-            g.fillRect( 0, 0, 50, 500 ) ; // West border
-            g.fillRect( 0, 450, 500, 50 ) ; // South border
-            g.fillRect( 450, 0, 50, 500 ) ; // East border
+            g.setColor( new Color( 75, 141, 221 ) ) ; // light blue
+            g.fillRect( 0, 0, 500, 50 ) ; // north border
+            g.fillRect( 0, 0, 50, 500 ) ; // west border
+            g.fillRect( 0, 450, 500, 50 ) ; // south border
+            g.fillRect( 450, 0, 50, 500 ) ; // east border
 
             this.currentInstruction = new PaintInstructions( 0, 0, 8 ) ;
             this.vecPaintInstructions.addElement( this.currentInstruction ) ;
@@ -49,7 +48,7 @@ public class ChessBoard extends Canvas
             }
 
         g.setColor( new Color( 75, 141, 221 ) ) ;
-        g.fillRect( 50, 450, 450, 50 ) ; // Paint over the current status text
+        g.fillRect( 50, 450, 450, 50 ) ; // paint over the current status text
 
         for ( int i = 0 ; i < this.vecPaintInstructions.size() ; i++ )
             {
@@ -75,7 +74,6 @@ public class ChessBoard extends Canvas
         }
 
 
-// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
     private static void drawTile( final int row,
                                   final int column,
                                   final Graphics g )
@@ -88,7 +86,7 @@ public class ChessBoard extends Canvas
         // fills color for odd rows of the chess board
         if ( ( ( row + 1 ) % 2 ) == 0 )
             {
-            // white squares
+            // color white
             if ( ( ( column + 1 ) % 2 ) == 0 )
                 {
                 g.setColor( white ) ;
@@ -102,7 +100,7 @@ public class ChessBoard extends Canvas
         // fills color for even/other rows of the chess board
         else
             {
-            // color black
+            // color gray
             if ( ( ( column + 1 ) % 2 ) == 0 )
                 {
                 g.setColor( other ) ;
@@ -117,12 +115,13 @@ public class ChessBoard extends Canvas
         // fills the grid with the 2 colors
         g.fillRect( ( 50 + ( column * 50 ) ), ( 50 + ( row * 50 ) ), 50, 50 ) ;
         }
-// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
 
 
-    // Protected means it can only be used by this class, and classes extending it
-    // Any class extending the chess board can use this method to add extra things
-    // like player pieces
+    /*
+     * protected means it can only be used by this class, and classes extending it
+     * any class extending this class can use this method to add extra things (like
+     * player pieces)
+     */
     protected void drawExtra( final Graphics g )
         {}
 
@@ -143,4 +142,4 @@ public class ChessBoard extends Canvas
         return -1 ;
         }
 
-    } // end class Board
+    } // end class ChessBoard

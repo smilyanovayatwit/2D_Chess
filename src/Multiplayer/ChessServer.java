@@ -132,7 +132,7 @@ class ChessServer
             clientsOutputs.put( clientName, outToClient ) ;
 
             // allow only 2 players per game
-            if ( clientsOutputs.size() >= 2 )
+            if ( clientsOutputs.size() == 2 )
                 {
                 // adds just the names of the clients to a new ArrayList
                 client = new ArrayList<>( clientsOutputs.keySet() ) ;

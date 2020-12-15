@@ -1,6 +1,10 @@
 
 package Pieces ;
 
+/**
+ * @author Veerle
+ */
+
 import Game.ChessPieces ;
 
 @SuppressWarnings( "javadoc" )
@@ -17,17 +21,17 @@ public class Rook extends ChessPieces
                               final int desColumn,
                               final int[][] playerMatrix )
         {
-        // If moved diagonal
+        // if moved in a non-straight way/diagonally
         if ( ( startRow != desRow ) && ( startColumn != desColumn ) )
             {
-            this.strErrorMsg = "Rock can only move Horiztonal or Vertical" ;
+            this.strErrorMsg = "Rook can only move Horiztonal or Vertical" ;
             return false ;
             }
 
-        // Since Queen shares the same movement as a bishop or rock, the path
+        // since the queen shares the same movement as a bishop or rook, the path
         // checking code is shared for all 3 of them
-        // The boolean at the end is weather the piece is moving straight, or
-        // diagonally
+
+        // boolean at the end is whether the piece is moving straight or diagonally
         return axisMove( startRow,
                          startColumn,
                          desRow,
@@ -35,4 +39,4 @@ public class Rook extends ChessPieces
                          playerMatrix,
                          true ) ;
         }
-    }// end class Rook
+    } // end class Rook

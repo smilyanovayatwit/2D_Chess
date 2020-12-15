@@ -1,6 +1,10 @@
 
 package Pieces ;
 
+/**
+ * @author Veerle
+ */
+
 import Game.ChessPieces ;
 
 @SuppressWarnings( "javadoc" )
@@ -21,59 +25,67 @@ public class King extends ChessPieces
         this.finalDesRow = desRow ;
         this.finalDesColumn = desColumn ;
 
-        // S
+        // if moved south
         if ( ( desRow == ( startRow + 1 ) ) && ( desColumn == startColumn ) )
             {
 
             return true ;
 
             }
+        // if moved southwest
         else if ( ( desRow == ( startRow + 1 ) ) &&
                   ( desColumn == ( startColumn - 1 ) ) )
-            { // SW
+            {
 
             return true ;
 
             }
+        // if moved west
         else if ( ( desRow == startRow ) && ( desColumn == ( startColumn - 1 ) ) )
-            { // W
+            {
 
             return true ;
 
             }
+        // if moved northwest
         else if ( ( desRow == ( startRow - 1 ) ) &&
                   ( desColumn == ( startColumn - 1 ) ) )
-            { // NW
+            {
 
             return true ;
 
             }
+        // if moved north
         else if ( ( desRow == ( startRow - 1 ) ) && ( desColumn == startColumn ) )
-            { // N
+            {
 
             return true ;
 
             }
+        // if moved northeast
         else if ( ( desRow == ( startRow - 1 ) ) &&
                   ( desColumn == ( startColumn + 1 ) ) )
-            { // NE
+            {
 
             return true ;
 
             }
+        // if moved east
         else if ( ( desRow == startRow ) && ( desColumn == ( startColumn + 1 ) ) )
-            { // E
+            {
 
             return true ;
 
             }
+        // if moved southeast
         else if ( ( desRow == ( startRow + 1 ) ) &&
                   ( desColumn == ( startColumn + 1 ) ) )
-            { // SE
+            {
 
             return true ;
 
             }
+        // if moved in any direction that is more than one space
         else
             {
 

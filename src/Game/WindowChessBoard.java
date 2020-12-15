@@ -29,7 +29,7 @@ public class WindowChessBoard extends ChessBoard
 
     private static final long serialVersionUID = 8129795847503729878L ;
 
-    private final int refreshRate = 5 ; // Amount of pixels moved before screen is
+    private final int refreshRate = 5 ; // amount of pixels moved before screen is
                                         // refreshed
 
     private final Image[][] imgPlayer = new Image[ 2 ][ 6 ] ;
@@ -54,7 +54,7 @@ public class WindowChessBoard extends ChessBoard
     public boolean isDragging = false ;
 
     private final Pawn pawnObject = new Pawn() ;
-    private final Rook rockObject = new Rook() ;
+    private final Rook rookObject = new Rook() ;
     private final Knight knightObject = new Knight() ;
     private final Bishop bishopObject = new Bishop() ;
     private final Queen queenObject = new Queen() ;
@@ -67,7 +67,6 @@ public class WindowChessBoard extends ChessBoard
         }
 
 
-// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
     public String getPlayerMsg()
         {
 
@@ -109,7 +108,6 @@ public class WindowChessBoard extends ChessBoard
         this.strPlayerName[ 1 ] = strPlayer2Name ;
         repaint() ;
         }
-// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
 
 
     @SuppressWarnings( "unused" )
@@ -187,6 +185,7 @@ public class WindowChessBoard extends ChessBoard
 
         boolean legalMove = false ;
 
+        // if moving the piece onto one of your own pieces
         if ( this.cellMatrix.getPlayerCell( desRow, desColumn ) ==
              this.currentPlayer )
             {
@@ -194,6 +193,7 @@ public class WindowChessBoard extends ChessBoard
             this.strStatusMsg = "Can not move onto a piece that is yours" ;
 
             }
+        // if not, check is the move is legal for each piece
         else
             {
 
@@ -208,7 +208,7 @@ public class WindowChessBoard extends ChessBoard
                                                            this.currentPlayer ) ;
                     break ;
                 case 1:
-                    legalMove = this.rockObject.legalMove( this.startRow,
+                    legalMove = this.rookObject.legalMove( this.startRow,
                                                            this.startColumn,
                                                            desRow,
                                                            desColumn,
@@ -247,12 +247,14 @@ public class WindowChessBoard extends ChessBoard
                 }
             }
 
+        // if the move is legal
         if ( legalMove )
             {
 
             int newDesRow = 0 ;
             int newDesColumn = 0 ;
 
+            // get the piece being dragged
             switch ( this.pieceBeingDragged )
                 {
 
@@ -261,8 +263,8 @@ public class WindowChessBoard extends ChessBoard
                     newDesColumn = this.pawnObject.getDesColumn() ;
                     break ;
                 case 1:
-                    newDesRow = this.rockObject.getDesRow() ;
-                    newDesColumn = this.rockObject.getDesColumn() ;
+                    newDesRow = this.rookObject.getDesRow() ;
+                    newDesColumn = this.rookObject.getDesColumn() ;
                     break ;
                 case 2:
                     newDesRow = this.knightObject.getDesRow() ;
@@ -284,6 +286,7 @@ public class WindowChessBoard extends ChessBoard
                     break ;
                 }
 
+            // update the player for the current piece
             this.cellMatrix.setPlayerCell( newDesRow,
                                            newDesColumn,
                                            this.currentPlayer ) ;
@@ -335,6 +338,7 @@ public class WindowChessBoard extends ChessBoard
                 this.cellMatrix.setPieceCell( newDesRow, newDesColumn, newPiece ) ;
 
                 }
+            // update the board
             else
                 {
                 this.cellMatrix.setPieceCell( newDesRow,
@@ -342,7 +346,7 @@ public class WindowChessBoard extends ChessBoard
                                               this.pieceBeingDragged ) ;
                 }
 
-            // checkmate
+            // if checkmate
             if ( this.cellMatrix.checkWinner( this.currentPlayer ) )
                 {
 
@@ -350,6 +354,7 @@ public class WindowChessBoard extends ChessBoard
                 this.strStatusMsg = getPlayerMsg() ;
 
                 }
+            // update the current player
             else
                 {
 
@@ -368,6 +373,7 @@ public class WindowChessBoard extends ChessBoard
                 this.strStatusMsg = getPlayerMsg() ;
                 }
             }
+        // error messages for each of the pieces if not a legal move
         else
             {
             switch ( this.pieceBeingDragged )
@@ -376,7 +382,7 @@ public class WindowChessBoard extends ChessBoard
                     this.strStatusMsg = this.pawnObject.getErrorMsg() ;
                     break ;
                 case 1:
-                    this.strStatusMsg = this.rockObject.getErrorMsg() ;
+                    this.strStatusMsg = this.rookObject.getErrorMsg() ;
                     break ;
                 case 2:
                     this.strStatusMsg = this.knightObject.getErrorMsg() ;
@@ -445,13 +451,14 @@ public class WindowChessBoard extends ChessBoard
     public void mousePressed( final MouseEvent e )
         {
 
+        // gets starting coordinates of the chess piece
         if ( !this.hasWon )
             {
 
             final int x = e.getX() ;
             final int y = e.getY() ;
 
-            // If in the correct bounds
+            // if in the correct bounds
             if ( ( ( x > 60 ) && ( x < 430 ) ) && ( ( y > 60 ) && ( y < 430 ) ) )
                 {
                 this.startRow = findWhichTileSelected( y ) ;
@@ -485,6 +492,7 @@ public class WindowChessBoard extends ChessBoard
     public void mouseReleased( final MouseEvent e )
         {
 
+        // gets ending coordinates of the chess piece
         if ( this.isDragging )
             {
 
@@ -502,13 +510,14 @@ public class WindowChessBoard extends ChessBoard
     public void mouseDragged( final MouseEvent e )
         {
 
+        // follow the piece and update the board
         if ( this.isDragging )
             {
 
             final int x = e.getX() ;
             final int y = e.getY() ;
 
-            // If in the correct bounds
+            // if in the correct bounds
             if ( ( ( x > 60 ) && ( x < 430 ) ) && ( ( y > 60 ) && ( y < 430 ) ) )
                 {
 
@@ -541,4 +550,4 @@ public class WindowChessBoard extends ChessBoard
         {
         repaint() ;
         }
-    }// end class WindowChessBoard
+    } // end class WindowChessBoard

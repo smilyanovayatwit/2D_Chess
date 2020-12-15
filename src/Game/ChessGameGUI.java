@@ -39,7 +39,6 @@ public class ChessGameGUI implements WindowFocusListener
         {}
 
 
-// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
     @SuppressWarnings( "unused" )
     public Container createGUI( final JFrame mainApp )
         {
@@ -53,7 +52,7 @@ public class ChessGameGUI implements WindowFocusListener
 
         this.mainChessBoard.setSize( new Dimension( 500, 500 ) ) ;
 
-        // chess piece images
+        // create chess piece images on the board
         try
             {
 
@@ -102,7 +101,6 @@ public class ChessGameGUI implements WindowFocusListener
 
         return panRoot ;
         }
-// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //// FOR FUTURE REFERENCE //
 
 
     @Override

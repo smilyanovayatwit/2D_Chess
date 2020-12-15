@@ -1,6 +1,10 @@
 
 package Pieces ;
 
+/**
+ * @author Veerle
+ */
+
 import Game.ChessPieces ;
 
 @SuppressWarnings( "javadoc" )
@@ -22,29 +26,33 @@ public class Pawn extends ChessPieces
         boolean legalMove = true ;
         final int[] playerPawnStart = { 6, 1 } ;
 
+        // if moving in the wrong direction
         if ( ( ( currentPlayer == 1 ) && ( desRow >= startRow ) ) ||
              ( ( currentPlayer == 2 ) && ( desRow <= startRow ) ) )
-            { // If moving in wrong direction
+            {
 
             this.strErrorMsg = "Can not move in that direction" ;
             legalMove = false ;
 
             }
+        // if moving sideways/diagonally
         else if ( desColumn != startColumn )
-            { // If moving sideways
+            {
 
+            // if only moving one place sideways/diagonally
             if ( ( ( desColumn > startColumn ) &&
                    ( desColumn == ( startColumn + 1 ) ) ) ||
                  ( ( desColumn < startColumn ) &&
                    ( desColumn == ( startColumn - 1 ) ) ) )
-                { // If only moving one place side ways
+                {
 
+                // if cell is empty
                 if ( ( ( desRow == ( startRow + 1 ) ) && ( currentPlayer == 2 ) ) ||
                      ( ( desRow == ( startRow - 1 ) ) && ( currentPlayer == 1 ) ) )
                     {
 
                     if ( playerMatrix[ desRow ][ desColumn ] == 0 )
-                        { // If cell is empty
+                        {
 
                         this.strErrorMsg = "Can only move diagonal when taking an enemy piece" ;
                         legalMove = false ;
@@ -67,22 +75,25 @@ public class Pawn extends ChessPieces
 
                 }
             }
+        // if moved two or more places
         else if ( ( ( currentPlayer == 1 ) && ( desRow < ( startRow - 1 ) ) ) ||
                   ( ( currentPlayer == 2 ) && ( desRow > ( startRow + 1 ) ) ) )
-            { // If moved two or more places
+            {
 
+            // if moved two places
             if ( ( ( currentPlayer == 1 ) && ( desRow == ( startRow - 2 ) ) ) ||
                  ( ( currentPlayer == 2 ) && ( desRow == ( startRow + 2 ) ) ) )
-                { // If moved two places
-
+                {
+                // if not at pawn starting place
                 if ( playerPawnStart[ currentPlayer - 1 ] != startRow )
-                    { // If not at pawn starting place
+                    {
 
                     this.strErrorMsg = "Can not move that far" ;
                     legalMove = false ;
 
                     }
                 }
+            // pawn can only move 1 space
             else
                 {
 

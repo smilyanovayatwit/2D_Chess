@@ -9,18 +9,23 @@ package Game ;
 public class CellMatrix
     {
 
-    // stores which player is in a cell. 0 empty, 1 player one, 2 player two
+    /*
+     * stores which player is in a cell
+     * 0 = empty
+     * 1 = player 1
+     * 2 = player 2
+     */
     private final int[][] playerMatrix = new int[ 8 ][ 8 ] ;
 
     /*
      * stores which piece is in a cell
-     * 0 pawn
-     * 1 rook
-     * 2 knight
-     * 3 bishop
-     * 4 queen
-     * 5 king
-     * 6 empty
+     * 0 = pawn
+     * 1 = rook
+     * 2 = knight
+     * 3 = bishop
+     * 4 = queen
+     * 5 = king
+     * 6 = empty
      */
     private final int[][] pieceMatrix = new int[ 8 ][ 8 ] ;
 

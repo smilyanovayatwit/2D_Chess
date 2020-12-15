@@ -1,6 +1,10 @@
 
 package Pieces ;
 
+/**
+ * @author Veerle
+ */
+
 import Game.ChessPieces ;
 
 @SuppressWarnings( "javadoc" )
@@ -22,62 +26,71 @@ public class Knight extends ChessPieces
         this.finalDesColumn = desColumn ;
         this.strErrorMsg = "Horse can only move in a L shape" ;
 
+        // if moved 2 north, 1 east
         if ( ( desRow == ( startRow - 2 ) ) && ( desColumn == ( startColumn - 1 ) ) )
-            { // 2N, 1E
+            {
 
             return true ;
 
             }
+        // if moved 2 north, 1 west
         else if ( ( desRow == ( startRow - 2 ) ) &&
                   ( desColumn == ( startColumn + 1 ) ) )
-            { // 2N, 1W
+            {
 
             return true ;
 
             }
+        // if moved 2 south, 1 east
         else if ( ( desRow == ( startRow + 2 ) ) &&
                   ( desColumn == ( startColumn - 1 ) ) )
-            { // 2S, 1E
+            {
 
             return true ;
 
             }
+        // if moved 2 south, 1 west
         else if ( ( desRow == ( startRow + 2 ) ) &&
                   ( desColumn == ( startColumn + 1 ) ) )
-            { // 2S, 1W
+            {
 
             return true ;
 
             }
+        // if moved 1 north, 2 east
         else if ( ( desRow == ( startRow - 1 ) ) &&
                   ( desColumn == ( startColumn - 2 ) ) )
-            { // 1N, 2E
+            {
 
             return true ;
 
             }
+        // if moved 1 north, 2 west
         else if ( ( desRow == ( startRow - 1 ) ) &&
                   ( desColumn == ( startColumn + 2 ) ) )
-            { // 1N, 2W
+            {
 
             return true ;
 
             }
+        // if moved 1 south, 2 east
         else if ( ( desRow == ( startRow + 1 ) ) &&
                   ( desColumn == ( startColumn - 2 ) ) )
-            { // 1S, 2E
+            {
 
             return true ;
 
             }
+        // if moved 1 south, 2 west
         else if ( ( desRow == ( startRow + 1 ) ) &&
                   ( desColumn == ( startColumn + 2 ) ) )
-            {// 1S, 2W
+            {
 
             return true ;
 
             }
 
+        // if moved in any non-L shaped way
         return false ;
 
         }
