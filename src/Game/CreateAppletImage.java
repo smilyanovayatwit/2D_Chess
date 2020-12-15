@@ -4,7 +4,6 @@ package Game ;
 /**
  * @author Veerle
  */
-
 import java.awt.Image ;
 import java.awt.Toolkit ;
 import java.io.BufferedInputStream ;

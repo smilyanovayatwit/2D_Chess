@@ -4,7 +4,6 @@ package Multiplayer ;
 /**
  * @author Tiffany Phan and Yuliya Smilyanova
  */
-
 import java.io.BufferedReader ;
 import java.io.DataOutputStream ;
 import java.io.IOException ;
@@ -234,4 +233,4 @@ class ChessServer
             thread.start() ;
             }
         }
-    }
+    } // end class ChessServer

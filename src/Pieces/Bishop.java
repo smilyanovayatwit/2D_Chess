@@ -4,7 +4,6 @@ package Pieces ;
 /**
  * @author Veerle
  */
-
 import Game.ChessPieces ;
 
 @SuppressWarnings( "javadoc" )

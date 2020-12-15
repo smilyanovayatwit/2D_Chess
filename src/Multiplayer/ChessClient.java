@@ -4,7 +4,6 @@ package Multiplayer ;
 /**
  * @author Tiffany Phan and Yuliya Smilyanova
  */
-
 import java.awt.event.MouseAdapter ;
 import java.awt.event.MouseEvent ;
 import java.awt.event.MouseListener ;
