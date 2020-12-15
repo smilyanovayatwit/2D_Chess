@@ -24,5 +24,5 @@
 https://youtu.be/l5WLvmp7xvU 
 
 ## Contributors
-Yuliya Smilyanova
+Yuliya Smilyanova and 
 Tiffany Phan
